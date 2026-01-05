@@ -1,0 +1,123 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+# =========================================================
+# Project Metadata
+# =========================================================
+
+[project]
+name = "praxis-sdk"
+version = "0.1.0"
+description = "PRAXIS SDK — Robotics Reasoning as a Service (RRaaS)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "LICENSE" }
+
+keywords = [
+  "robotics",
+  "reasoning",
+  "rras",
+  "agents",
+  "physics",
+  "navigation",
+  "simulation",
+  "infrastructure",
+  "deterministic-compute"
+]
+
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: System :: Distributed Computing"
+]
+
+dependencies = [
+  "requests>=2.31.0",
+  "pydantic>=2.5.0",
+  "typing-extensions>=4.8.0"
+]
+
+# =========================================================
+# Optional Dependencies
+# =========================================================
+
+[project.optional-dependencies]
+
+dev = [
+  "pytest>=8.0",
+  "pytest-cov",
+  "black",
+  "ruff",
+  "mypy"
+]
+
+docs = [
+  "mkdocs",
+  "mkdocs-material"
+]
+
+# =========================================================
+# URLs
+# =========================================================
+
+[project.urls]
+Homepage = "https://prraas.tech"
+Documentation = "https://docs.prraas.tech"
+Repository = "https://github.com/prraas/praxis-sdk"
+Issues = "https://github.com/prraas/praxis-sdk/issues"
+Twitter = "https://x.com/praxis_rraas"
+
+# =========================================================
+# Tooling Configuration
+# =========================================================
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+# =========================================================
+# Black
+# =========================================================
+
+[tool.black]
+line-length = 88
+target-version = ["py310"]
+
+# =========================================================
+# Ruff
+# =========================================================
+
+[tool.ruff]
+line-length = 88
+select = ["E", "F", "I", "B"]
+ignore = ["E501"]
+
+# =========================================================
+# MyPy
+# =========================================================
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+ignore_missing_imports = true
+
+# =========================================================
+# Pytest
+# =========================================================
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra -q"
+testpaths = ["tests"]
