@@ -1,6 +1,5 @@
-# robostream/api/physics.py
-from robostream.core.http import HttpClient
-from robostream.models.response import Response
+from praxis.core.http import HttpClient
+from praxis.models.response import Response
 
 
 class PhysicsAPI:

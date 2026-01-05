@@ -1,7 +1,7 @@
 # examples/navigation_demo.py
-from robostream import Client
+from praxis import Client
 
-client = Client(api_key="robostream-demo-key")
+client = Client(api_key="praxis-demo-key")
 
 start = {"x": 0, "y": 0}
 goal = {"x": 10, "y": 10}

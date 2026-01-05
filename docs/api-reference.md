@@ -27,10 +27,10 @@ If you are new to PRAXIS, read **`overview.md`** first.
 ## 📦 Top-Level Imports
 
 ```python
-from robostream import Client
+from praxis import Client
 ```
 
-> The `robostream` package name is retained for backward compatibility.
+> The `praxis` package name is retained for backward compatibility.
 > PRAXIS is the protocol and platform name.
 
 ---

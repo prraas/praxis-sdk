@@ -88,7 +88,7 @@ pip install -e .
 
 Installing in **editable mode** means:
 
-* the `robostream` (PRAXIS) package becomes importable
+* the `praxis` package becomes importable
 * local code changes apply immediately
 * no reinstall is required after edits
 
@@ -150,7 +150,7 @@ Restart the terminal after setting the variable.
 ### Option 2: Pass API Key Explicitly
 
 ```python
-from robostream import Client
+from praxis import Client
 
 client = Client(api_key="your-api-key")
 ```
@@ -191,7 +191,7 @@ This is useful for:
 Run the following snippet to confirm the SDK is installed correctly:
 
 ```python
-from robostream import Client
+from praxis import Client
 
 client = Client()
 

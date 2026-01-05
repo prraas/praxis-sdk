@@ -1,19 +1,18 @@
-# robostream/core/http.py
 import requests
 
-from robostream.core.auth import Auth
-from robostream.core.config import Config
-from robostream.core.retries import retry
-from robostream.core.serializer import Serializer
+from praxis.core.auth import Auth
+from praxis.core.config import Config
+from praxis.core.retries import retry
+from praxis.core.serializer import Serializer
 
-from robostream.exceptions import (
+from praxis.exceptions import (
     APIError,
     ValidationError,
     PaymentError,
     ExecutionError,
 )
-from robostream.models.envelope import Envelope
-from robostream.models.response import Response
+from praxis.models.envelope import Envelope
+from praxis.models.response import Response
 
 
 class HttpClient:

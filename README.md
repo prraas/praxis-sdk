@@ -173,16 +173,16 @@ docs/
 
 ````
 
-### 📘 `overview.md`
+### 📘 [`overview.md`](https://github.com/prraas/praxis-sdk/blob/main/docs/overview.md)
 High-level explanation of PRAXIS, RRaaS, system architecture, and design philosophy.
 
-### 📦 `installation.md`
+### 📦 [`installation.md`](https://github.com/prraas/praxis-sdk/blob/main/docs/installation.md)
 Environment requirements, SDK installation, API key setup, and verification steps.
 
-### 📜 `api-reference.md`
+### 📜 [`api-reference.md`](https://github.com/prraas/praxis-sdk/blob/main/docs/api-reference.md)
 Formal API specification: methods, parameters, response schemas, cost semantics, and errors.
 
-### 🧪 `usage.md`
+### 🧪 [`usage.md`](https://github.com/prraas/praxis-sdk/blob/main/docs/usage.md)
 Practical examples: basic calls, sessions, agent loops, and integration patterns.
 
 ---
@@ -218,7 +218,7 @@ export PRAXIS_API_KEY=your-api-key
 ### Or in Code
 
 ```python
-from robostream import Client
+from praxis import Client
 client = Client(api_key="your-api-key")
 ```
 
@@ -229,7 +229,7 @@ API keys enforce access control, usage limits, and billing.
 ## ⚡ Quick Start
 
 ```python
-from robostream import Client
+from praxis import Client
 
 client = Client()
 

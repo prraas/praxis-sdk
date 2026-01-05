@@ -1,9 +1,9 @@
 # tests/test_physics.py
-from robostream import Client
+from praxis import Client
 
 
 def test_force_calculation():
-    client = Client(api_key="robostream-demo-key")
+    client = Client(api_key="praxis-demo-key")
 
     res = client.physics.force(mass=2, acceleration=3)
 

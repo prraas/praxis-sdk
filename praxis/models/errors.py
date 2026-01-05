@@ -1,5 +1,3 @@
-# robostream/models/errors.py
-
 class ModelError(Exception):
     """
     Base error for model / response parsing issues.

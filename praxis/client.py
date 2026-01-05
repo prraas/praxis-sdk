@@ -1,11 +1,10 @@
-# robostream/client.py
-from robostream.core.config import Config
-from robostream.core.http import HttpClient
+from praxis.core.config import Config
+from praxis.core.http import HttpClient
 
-from robostream.api.physics import PhysicsAPI
-from robostream.api.navigation import NavigationAPI
-from robostream.api.simulation import SimulationAPI
-from robostream.session import Session
+from praxis.api.physics import PhysicsAPI
+from praxis.api.navigation import NavigationAPI
+from praxis.api.simulation import SimulationAPI
+from praxis.session import Session
 
 
 class Client:

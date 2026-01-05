@@ -1,9 +1,9 @@
 # tests/test_sessions.py
-from robostream import Client
+from praxis import Client
 
 
 def test_session_context():
-    client = Client(api_key="robostream-demo-key")
+    client = Client(api_key="praxis-demo-key")
 
     with client.session() as session:
         r1 = session.physics.force(1, 2)

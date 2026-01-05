@@ -1,8 +1,7 @@
 # examples/quickstart.py
-from robostream import Client
+from praxis import Client
 
-# API key can also come from env ROBOSTREAM_API_KEY
-client = Client(api_key="robostream-demo-key")
+client = Client(api_key="praxis-demo-key")
 
 res = client.physics.force(mass=2, acceleration=3)
 

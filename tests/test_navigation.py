@@ -1,9 +1,9 @@
 # tests/test_navigation.py
-from robostream import Client
+from praxis import Client
 
 
 def test_navigation_plan():
-    client = Client(api_key="robostream-demo-key")
+    client = Client(api_key="praxis-demo-key")
 
     res = client.navigation.plan(
         start={"x": 0, "y": 0},

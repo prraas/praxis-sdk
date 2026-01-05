@@ -1,5 +1,4 @@
-# robostream/core/serializer.py
-from robostream.models.errors import InvalidEnvelopeError
+from praxis.models.errors import InvalidEnvelopeError
 
 
 class Serializer:

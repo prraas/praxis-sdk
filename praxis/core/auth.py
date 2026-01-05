@@ -1,5 +1,4 @@
-# robostream/core/auth.py
-from robostream.core.config import Config
+from praxis.core.config import Config
 
 
 class Auth:

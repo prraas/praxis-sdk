@@ -68,7 +68,7 @@ Nothing else is hidden.
 The `Client` object is the main interface to PRAXIS.
 
 ```python
-from robostream import Client
+from praxis import Client
 
 client = Client(api_key="your-api-key")
 ```

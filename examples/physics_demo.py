@@ -1,7 +1,7 @@
 # examples/physics_demo.py
-from robostream import Client
+from praxis import Client
 
-client = Client(api_key="robostream-demo-key")
+client = Client(api_key="praxis-demo-key")
 
 cases = [
     (1, 9.8),

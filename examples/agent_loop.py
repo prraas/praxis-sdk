@@ -1,7 +1,7 @@
 # examples/agent_loop.py
-from robostream import Client
+from praxis import Client
 
-client = Client(api_key="robostream-demo-key")
+client = Client(api_key="praxis-demo-key")
 
 state = {
     "position": {"x": 0, "y": 0},

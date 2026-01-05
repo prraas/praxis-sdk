@@ -1,6 +1,5 @@
-# robostream/models/response.py
 from typing import Generic, TypeVar
-from robostream.models.envelope import Envelope
+from praxis.models.envelope import Envelope
 
 T = TypeVar("T")
 
