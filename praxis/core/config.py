@@ -17,7 +17,7 @@ class Config:
         self.base_url = (
             base_url
             or os.getenv("PRAXIS_BASE_URL")
-            or "http://localhost:8000"
+            or "https://api.prraas.tech"
         ).rstrip("/")
 
         self.timeout = timeout
