@@ -4,7 +4,7 @@ from praxis.models.response import Response
 
 class NavigationAPI:
     """
-    Navigation / pathfinding operations.
+    Navigation / pathfinding operations using A* algorithm.
     """
 
     def __init__(self, http: HttpClient):
@@ -12,20 +12,28 @@ class NavigationAPI:
 
     def plan(
         self,
-        start: dict,
-        goal: dict,
-        obstacles: list[dict] | None = None,
+        grid: list[list[int]],
+        start: tuple[int, int] | list[int],
+        goal: tuple[int, int] | list[int],
     ) -> Response[dict]:
         """
-        Plan a navigation path.
+        Plan a navigation path using grid-based A* pathfinding.
+        
+        Args:
+            grid: 2D grid where 0 = passable, 1 = obstacle
+            start: Starting position (row, col)
+            goal: Goal position (row, col)
+            
+        Returns:
+            Response with path, steps, reachable status
         """
         payload = {
-            "start": start,
-            "goal": goal,
-            "obstacles": obstacles or [],
+            "grid": grid,
+            "start": list(start),
+            "goal": list(goal),
         }
 
         return self._http.post(
-            "/api/v1/navigation/plan",
+            "/api/v1/simulate/navigation",
             json=payload,
         )
