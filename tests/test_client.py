@@ -13,7 +13,7 @@ def test_client_requires_api_key():
 
 
 def test_client_initializes_with_key():
-    client = Client(api_key="praxis-demo-key")
+    client = Client(api_key="praxis-demo-key", base_url="https://api.prraas.tech")
     assert client.physics is not None
     assert client.navigation is not None
     assert client.simulation is not None
