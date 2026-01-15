@@ -3,7 +3,7 @@ from praxis import Client
 
 
 def test_force_calculation():
-    client = Client(api_key="praxis-demo-key")
+    client = Client(api_key="praxis-demo-key", base_url="https://api.prraas.tech")
 
     res = client.physics.force(mass=2, acceleration=3)
 
