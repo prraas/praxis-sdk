@@ -137,31 +137,35 @@ Physics execution is:
 
 The Navigation API handles path planning and navigation reasoning.
 
-### Example: Path Planning
+### Example: Grid-Based Path Planning
 
 ```python
+# Create a 10x10 grid (0 = passable, 1 = obstacle)
+grid = [[0 for _ in range(10)] for _ in range(10)]
+grid[3][4] = 1  # Add obstacle
+grid[6][7] = 1
+
 res = client.navigation.plan(
-    start=[0, 0],
-    goal=[10, 10],
-    obstacles=[
-        [3, 4],
-        [6, 7]
-    ]
+    grid=grid,
+    start=(0, 0),
+    goal=(9, 9)
 )
 ```
 
 ### Result Structure
 
 ```python
-print(res.data)
+result = res.data.get("result", res.data)
+print(result)
 ```
 
 Example:
 
 ```python
 {
-  "path": [[0,0], [2,2], [5,5], [10,10]],
-  "length": 14.1
+  "reachable": True,
+  "steps": 18,
+  "path": [[0,0], [0,1], ...]
 }
 ```
 
@@ -177,30 +181,32 @@ Navigation results are:
 
 The Simulation API validates robotic logic through controlled execution.
 
-### Example: Simulation Run
+### Example: Navigation Simulation
 
 ```python
-res = client.simulation.run(
-    steps=100,
-    parameters={
-        "velocity": 1.5,
-        "turn_rate": 0.2
-    }
+grid = [[0 for _ in range(10)] for _ in range(10)]
+
+res = client.simulation.navigate(
+    grid=grid,
+    start=(0, 0),
+    goal=(9, 9)
 )
 ```
 
 ### Reading Simulation Output
 
 ```python
-print(res.data)
+result = res.data.get("result", res.data)
+print(result)
 ```
 
 Example:
 
 ```python
 {
-  "final_state": {...},
-  "timeline": [...]
+  "reachable": True,
+  "steps": 18,
+  "path": [[0, 0], [0, 1], ...]
 }
 ```
 
@@ -256,16 +262,19 @@ This is especially useful for:
 ### Example: Session Workflow
 
 ```python
+grid = [[0 for _ in range(10)] for _ in range(10)]
+
 with client.session() as session:
     r1 = session.physics.force(1, 2)
     r2 = session.physics.force(3, 4)
     r3 = session.navigation.plan(
-        start=[0,0],
-        goal=[5,5]
+        grid=grid,
+        start=(0, 0),
+        goal=(5, 5)
     )
 
-print(r1.data, r1.cost)
-print(r2.data, r2.cost)
+print(r1.data["force"], r1.cost)
+print(r2.data["force"], r2.cost)
 print(r3.data, r3.cost)
 ```
 
