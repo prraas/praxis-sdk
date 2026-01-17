@@ -156,28 +156,29 @@ The Navigation API handles **path planning and spatial reasoning**.
 
 ```python
 plan(
-    start: list[float],
-    goal: list[float],
-    obstacles: list[list[float]] | None = None
+    grid: list[list[int]],
+    start: tuple[int, int],
+    goal: tuple[int, int]
 ) -> Response
 ```
 
 #### Parameters
 
-| Name        | Type                | Description                 |
-| ----------- | ------------------- | --------------------------- |
-| `start`     | `list[float]`       | Start coordinates           |
-| `goal`      | `list[float]`       | Goal coordinates            |
-| `obstacles` | `list[list[float]]` | Optional obstacle positions |
+| Name    | Type               | Description                          |
+| ------- | ------------------ | ------------------------------------ |
+| `grid`  | `list[list[int]]`  | 2D grid where 0=passable, 1=obstacle |
+| `start` | `tuple[int, int]`  | Start position (row, col)            |
+| `goal`  | `tuple[int, int]`  | Goal position (row, col)             |
 
 #### Returns
 
-A `Response` object with `data`:
+A `Response` object with `data.result`:
 
 ```json
 {
-  "path": [[x, y], ...],
-  "length": <float>
+  "reachable": true,
+  "steps": 10,
+  "path": [[0, 0], [0, 1], ...]
 }
 ```
 
@@ -197,30 +198,33 @@ The Simulation API validates robotics logic through **controlled execution steps
 
 ---
 
-### Method: `run`
+### Method: `navigate`
 
 ```python
-run(
-    steps: int,
-    parameters: dict | None = None
+navigate(
+    grid: list[list[int]],
+    start: tuple[int, int],
+    goal: tuple[int, int]
 ) -> Response
 ```
 
 #### Parameters
 
-| Name         | Type   | Description                    |
-| ------------ | ------ | ------------------------------ |
-| `steps`      | `int`  | Number of simulation steps     |
-| `parameters` | `dict` | Optional simulation parameters |
+| Name    | Type               | Description                          |
+| ------- | ------------------ | ------------------------------------ |
+| `grid`  | `list[list[int]]`  | 2D grid where 0=passable, 1=obstacle |
+| `start` | `tuple[int, int]`  | Start position (row, col)            |
+| `goal`  | `tuple[int, int]`  | Goal position (row, col)             |
 
 #### Returns
 
-A `Response` object with `data`:
+A `Response` object with `data.result`:
 
 ```json
 {
-  "final_state": <object>,
-  "timeline": <list>
+  "reachable": true,
+  "steps": 10,
+  "path": [[0, 0], [0, 1], ...]
 }
 ```
 
