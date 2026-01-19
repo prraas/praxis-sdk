@@ -37,3 +37,7 @@ class Session:
     @property
     def simulation(self):
         return self._client.simulation
+
+    @property
+    def vision(self):
+        return self._client.vision
