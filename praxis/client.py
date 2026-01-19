@@ -4,6 +4,7 @@ from praxis.core.http import HttpClient
 from praxis.api.physics import PhysicsAPI
 from praxis.api.navigation import NavigationAPI
 from praxis.api.simulation import SimulationAPI
+from praxis.api.vision import VisionAPI
 from praxis.session import Session
 
 
@@ -30,6 +31,7 @@ class Client:
         self.physics = PhysicsAPI(self._http)
         self.navigation = NavigationAPI(self._http)
         self.simulation = SimulationAPI(self._http)
+        self.vision = VisionAPI(self._http)
 
     def session(self) -> Session:
         """
