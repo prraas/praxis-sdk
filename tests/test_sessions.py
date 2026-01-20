@@ -3,7 +3,7 @@ from praxis import Client
 
 
 def test_session_context():
-    client = Client(api_key="praxis-demo-key")
+    client = Client(api_key="praxis-demo-key", base_url="https://api.prraas.tech")
 
     with client.session() as session:
         r1 = session.physics.force(1, 2)
