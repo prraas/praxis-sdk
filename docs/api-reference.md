@@ -138,6 +138,118 @@ res = client.physics.force(mass=2, acceleration=3)
 
 ---
 
+### Method: `mass`
+
+```python
+mass(
+    volume: float,
+    density: float
+) -> Response
+```
+
+#### Parameters
+
+| Name      | Type    | Description          |
+| --------- | ------- | -------------------- |
+| `volume`  | `float` | Object volume (m³)   |
+| `density` | `float` | Material density (kg/m³) |
+
+#### Returns
+
+A `Response` object with `data`:
+
+```json
+{
+  "mass": <float>
+}
+```
+
+---
+
+### Method: `stability`
+
+```python
+stability(
+    base_width: float,
+    center_of_mass_height: float
+) -> Response
+```
+
+#### Parameters
+
+| Name                    | Type    | Description                   |
+| ----------------------- | ------- | ----------------------------- |
+| `base_width`            | `float` | Width of the object's base    |
+| `center_of_mass_height` | `float` | Height of the center of mass  |
+
+#### Returns
+
+A `Response` object with `data`:
+
+```json
+{
+  "stability": <float>,
+  "warnings": [<str>]
+}
+```
+
+---
+
+## 👁️ Vision API
+
+### Class: `VisionAPI`
+
+Accessed via:
+
+```python
+client.vision
+```
+
+The Vision API provides **visual reasoning and object detection**.
+
+---
+
+### Method: `analyze`
+
+```python
+analyze(
+    image: str,
+    model: str = "auto",
+    min_confidence: float = 0.5,
+    max_objects: int = 10
+) -> Response
+```
+
+#### Parameters
+
+| Name             | Type    | Description                                      |
+| ---------------- | ------- | ------------------------------------------------ |
+| `image`          | `str`   | Base64 encoded image string                      |
+| `model`          | `str`   | Model selection ("auto", "simple")               |
+| `min_confidence` | `float` | Minimum confidence threshold (0.0 - 1.0)         |
+| `max_objects`    | `int`   | Maximum number of objects to detect              |
+
+#### Returns
+
+A `Response` object with `data` containing detected objects and metadata:
+
+```json
+{
+  "model": "yolov8",
+  "count": 3,
+  "objects": [
+    {
+      "id": 0,
+      "label": "person",
+      "confidence": 0.95,
+      "bbox": {"x": 0.1, "y": 0.1, "width": 0.2, "height": 0.5}
+    }
+  ]
+}
+```
+
+---
+
 ## 🧭 Navigation API
 
 ### Class: `NavigationAPI`
