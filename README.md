@@ -187,6 +187,29 @@ Practical examples: basic calls, sessions, agent loops, and integration patterns
 
 ---
 
+## 💻 Local Development
+
+If you are developing locally or need to run the **PRAXIS Backend** yourself:
+
+1.  **Navigate to backend:**
+    ```bash
+    cd praxis-backend
+    ```
+2.  **Install requirements:**
+    ```bash
+    pip install -r requirements.txt
+    ```
+3.  **Start the server:**
+    ```bash
+    python -m uvicorn server.main:app --port 8003 --reload
+    ```
+4.  **Configure Client:**
+    ```python
+    client = Client(base_url="http://127.0.0.1:8003", api_key="praxis-demo-key")
+    ```
+
+---
+
 ## 📦 Installation
 
 ### Requirements
