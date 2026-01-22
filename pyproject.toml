@@ -82,10 +82,10 @@ Twitter = "https://x.com/praxis_rraas"
 # =========================================================
 
 [tool.setuptools]
-package-dir = { "" = "src" }
+package-dir = { "" = "." }
 
 [tool.setuptools.packages.find]
-where = ["src"]
+where = ["."]
 
 # =========================================================
 # Black
