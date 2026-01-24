@@ -13,6 +13,9 @@ class PhysicsAPI:
     def force(self, mass: float, acceleration: float) -> Response[dict]:
         """
         Compute force using F = m * a.
+        
+        Status: Stable (v1-alpha)
+        Guarantee: Deterministic
         """
         payload = {
             "mass": mass,
