@@ -19,6 +19,9 @@ class NavigationAPI:
         """
         Plan a navigation path using grid-based A* pathfinding.
         
+        Status: Stable (v1-alpha)
+        Guarantee: Deterministic
+
         Args:
             grid: 2D grid where 0 = passable, 1 = obstacle
             start: Starting position (row, col)
