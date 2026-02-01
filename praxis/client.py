@@ -24,6 +24,10 @@ class Client:
             base_url=base_url,
             timeout=timeout,
         )
+        
+        # Phase 1: Access Boundary Check
+        from praxis.core.access import AccessControlLayer
+        self.__access = AccessControlLayer(self.config.api_key)
 
         self._http = HttpClient(self.config)
 
