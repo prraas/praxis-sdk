@@ -6,7 +6,8 @@ from praxis.api.navigation import NavigationAPI
 from praxis.api.simulation import SimulationAPI
 from praxis.api.vision import VisionAPI
 from praxis.session import Session
-from praxis.api.skills import SkillsAPI
+from praxis.api.manipulation import ManipulationAPI
+from praxis.api.sorting import SortingAPI
 
 
 class Client:
@@ -26,19 +27,20 @@ class Client:
             timeout=timeout,
         )
         
-        # Phase 1: Access Boundary Check
 
         self._http = HttpClient(self.config)
 
-        # Public domain APIs
         self.physics = PhysicsAPI(self._http)
         self.navigation = NavigationAPI(self._http)
         self.simulation = SimulationAPI(self._http)
         self.vision = VisionAPI(self._http)
-        self.skills = SkillsAPI(self._http)
+        
+        self.manipulation = ManipulationAPI(self._http)
+        self.sorting = SortingAPI(self._http)
 
     def session(self) -> Session:
         """
         Create an agent/session context.
         """
         return Session(self)
+  
