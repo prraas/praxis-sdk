@@ -52,6 +52,32 @@ class HttpClient:
             retry_on=(APIError,),
         )
 
+    def get(self, path: str, params: dict = None) -> Response:
+        if not path.startswith("/"):
+            raise ValueError("API path must start with '/'")
+
+        url = f"{self._config.base_url}{path}"
+
+        def _request():
+            try:
+                resp = requests.get(
+                    url,
+                    headers=self._auth.headers(),
+                    params=params,
+                    timeout=self._config.timeout,
+                )
+            except requests.RequestException as exc:
+                raise APIError(f"Network error: {exc}") from exc
+
+            return self._handle_response(resp)
+
+        return retry(
+            _request,
+            retries=2,
+            backoff=0.5,
+            retry_on=(APIError,),
+        )
+
     def _handle_response(self, resp: requests.Response) -> Response:
         try:
             payload = resp.json()
