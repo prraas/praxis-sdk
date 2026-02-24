@@ -8,6 +8,7 @@ from praxis.api.vision import VisionAPI
 from praxis.session import Session
 from praxis.api.manipulation import ManipulationAPI
 from praxis.api.sorting import SortingAPI
+from praxis.api.analytics import AnalyticsAPI
 
 
 class Client:
@@ -27,16 +28,20 @@ class Client:
             timeout=timeout,
         )
         
+        # Phase 1: Access Boundary Check
 
         self._http = HttpClient(self.config)
 
+        # Public domain APIs
         self.physics = PhysicsAPI(self._http)
         self.navigation = NavigationAPI(self._http)
         self.simulation = SimulationAPI(self._http)
         self.vision = VisionAPI(self._http)
         
+        # Phase 2: Skills
         self.manipulation = ManipulationAPI(self._http)
         self.sorting = SortingAPI(self._http)
+        self.analytics = AnalyticsAPI(self._http)
 
     def session(self) -> Session:
         """
