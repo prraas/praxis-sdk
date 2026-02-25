@@ -153,6 +153,9 @@ PRAXIS currently supports:
 - ⚙️ **Physics reasoning**  
 - 🧭 **Navigation & path logic**  
 - 🧪 **Simulation & validation**  
+- ✋ **Manipulation (Pick)**  
+- 🗂️ **Sorting (Capacity & Rules)**  
+- 📊 **Analytics (Usage & Cost)**
 - 🔁 **Multi-step agent workflows**  
 
 New domains can be added without breaking existing integrations.
@@ -205,7 +208,7 @@ If you are developing locally or need to run the **PRAXIS Backend** yourself:
     ```
 4.  **Configure Client:**
     ```python
-    client = Client(base_url="http://127.0.0.1:8003", api_key="praxis-demo-key")
+    client = Client(base_url="https://api.prraas.tech", api_key="rbs_prod_...")
     ```
 
 ---
@@ -254,13 +257,38 @@ API keys enforce access control, usage limits, and billing.
 ```python
 from praxis import Client
 
-client = Client()
+from praxis import Client
+
+# Initialize with Production Credentials
+client = Client(
+    api_key="your-api-key", 
+    base_url="https://api.prraas.tech"
+)
 
 res = client.physics.force(mass=2, acceleration=3)
 
 print(res.data)        # {'force': 6.0}
 print(res.cost)        # execution cost
 print(res.request_id)  # traceable execution ID
+
+# Manipulation (Pick)
+res = client.manipulation.pick(
+    object_position=[1.0, 0.5, 0.0],
+    gripper_position=[1.0, 0.5, 0.1],
+    object_size=[0.1, 0.1, 0.1],
+    gripper_opening=0.12
+)
+print(res.success)     # True
+
+# Sorting
+items = [{"id": "box1", "color": "red"}, {"id": "box2", "color": "blue"}]
+bins = [{"id": "bin_red", "criteria": "red"}, {"id": "bin_blue", "criteria": "blue"}]
+res = client.sorting.sort(items=items, bins=bins, criteria="color")
+print(res.data)        # {'placements': [...]}
+
+# Analytics (Telemetry)
+stats = client.analytics.get_stats(days=7)
+print(stats.data)      # {'total_cost': 0.05, 'total_requests': 100}
 ```
 
 ---
@@ -349,8 +377,11 @@ Result + Cost + Request ID
 See `/examples` for runnable demos:
 
 * `quickstart.py`
+* `skills_demo.py`
 * `physics_demo.py`
 * `navigation_demo.py`
+* `agent_loop.py`
+* `session_demo.py`
 * `agent_loop.py`
 * `session_demo.py`
 
