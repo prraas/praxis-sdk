@@ -85,8 +85,156 @@ PRAXIS_API_KEY
 | `client.physics`    | `PhysicsAPI`    | Physics reasoning API     |
 | `client.navigation` | `NavigationAPI` | Navigation & planning API |
 | `client.simulation` | `SimulationAPI` | Simulation execution API  |
+| `client.manipulation`| `ManipulationAPI` | Object interaction & pick API |
+| `client.sorting`    | `SortingAPI`    | Bin packing & rules API   |
+| `client.analytics`  | `AnalyticsAPI`  | Telemetry & cost API      |
 
 Each property returns a **domain-specific API object**.
+
+Each property returns a **domain-specific API object**.
+
+---
+
+## ✋ Manipulation API
+
+### Class: `ManipulationAPI`
+
+Accessed via:
+
+```python
+client.manipulation
+```
+
+The Manipulation API handles **object interaction planning** (picking, placing).
+
+---
+
+### Method: `pick`
+
+```python
+pick(
+    object_position: list[float],
+    gripper_position: list[float],
+    object_size: list[float],
+    gripper_opening: float,
+    object_mass: float = 0.5,
+    object_material: str = "plastic"
+) -> Response
+```
+
+#### Parameters
+
+| Name              | Type           | Description                     |
+| ----------------- | -------------- | ------------------------------- |
+| `object_position` | `[x, y, z]`    | Center of object                |
+| `gripper_position`| `[x, y, z]`    | Center of gripper               |
+| `object_size`     | `[w, h, d]`    | Bounding box dimensions         |
+| `gripper_opening` | `float`        | Gripper width (meters)          |
+| `object_mass`     | `float`        | Mass in kg (default 0.5)        |
+| `object_material` | `str`          | "steel", "plastic", "wood", etc |
+
+#### Returns
+
+A `Response` object with `data`:
+
+```json
+{
+  "success": true,
+  "physics": {
+    "slippage": false,
+    "torque_ok": true
+  }
+}
+```
+
+---
+
+## 🗂️ Sorting API
+
+### Class: `SortingAPI`
+
+Accessed via:
+
+```python
+client.sorting
+```
+
+The Sorting API handles **logical organization and bin packing**.
+
+---
+
+### Method: `sort`
+
+```python
+sort(
+    items: list[dict],
+    bins: list[dict],
+    criteria: str
+) -> Response
+```
+
+#### Parameters
+
+| Name       | Type         | Description                     |
+| ---------- | ------------ | ------------------------------- |
+| `items`    | `list[dict]` | Objects to sort                 |
+| `bins`     | `list[dict]` | available containers with caps  |
+| `criteria` | `str`        | Attribute to match ("color")    |
+
+#### Returns
+
+A `Response` object with placement plan.
+
+---
+
+## 📊 Analytics API
+
+### Class: `AnalyticsAPI`
+
+Accessed via:
+
+```python
+client.analytics
+```
+
+The Analytics API exposes runtime telemetry, cost, and historical logs.
+
+---
+
+### Method: `get_stats`
+
+```python
+get_stats(
+    days: int = 7,
+    endpoint: str | None = None
+) -> Response[dict]
+```
+
+#### Parameters
+
+| Name       | Type    | Description                     |
+| ---------- | ------- | ------------------------------- |
+| `days`     | `int`   | Number of past days to query    |
+| `endpoint` | `str`   | Optional filter (e.g. "vision") |
+
+#### Returns
+
+A `Response` object containing compute `total_requests`, `total_cost`, `success_rate`, and `endpoints` metrics.
+
+---
+
+### Method: `get_logs`
+
+```python
+get_logs(
+    limit: int = 50,
+    endpoint: str | None = None
+) -> Response[dict]
+```
+
+#### Returns
+
+A `Response` object containing the `count` and list of recent `logs` with execution timestamps.
 
 ---
 
@@ -216,7 +364,8 @@ analyze(
     image: str,
     model: str = "auto",
     min_confidence: float = 0.5,
-    max_objects: int = 10
+    max_objects: int = 10,
+    model_tier: str = "nano"
 ) -> Response
 ```
 
@@ -225,9 +374,10 @@ analyze(
 | Name             | Type    | Description                                      |
 | ---------------- | ------- | ------------------------------------------------ |
 | `image`          | `str`   | Base64 encoded image string                      |
-| `model`          | `str`   | Model selection ("auto", "simple")               |
+| `model`          | `str`   | Model selection ("auto", "yolo", "simple")       |
 | `min_confidence` | `float` | Minimum confidence threshold (0.0 - 1.0)         |
 | `max_objects`    | `int`   | Maximum number of objects to detect              |
+| `model_tier`     | `str`   | Execution tier for YOLO ("nano" or "small")      |
 
 #### Returns
 
