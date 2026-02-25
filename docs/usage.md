@@ -70,7 +70,10 @@ The `Client` object is the main interface to PRAXIS.
 ```python
 from praxis import Client
 
-client = Client(api_key="your-api-key")
+client = Client(
+    api_key="rbs_prod_...",
+    base_url="https://api.prraas.tech"
+)
 ```
 
 ### API Key Resolution
@@ -215,6 +218,43 @@ Simulation execution is designed for:
 * validation
 * sanity checks
 * agent decision verification
+
+---
+
+## ✋ Manipulation & Sorting
+
+### Example: Pick Planning
+
+```python
+res = client.manipulation.pick(
+    object_position=[1.0, 0.0, 0.5],
+    gripper_position=[1.0, 0.0, 0.6],
+    object_size=[0.1, 0.2, 0.1],
+    gripper_opening=0.15,
+    object_material="steel"
+)
+
+if res.success:
+    print("Safe to pick!")
+else:
+    print("Slippage detected:", res.data["warnings"])
+```
+
+### Example: Sorting Logic
+
+```python
+items = [
+    {"id": "apple", "color": "red"},
+    {"id": "banana", "color": "yellow"}
+]
+bins = [
+    {"id": "red_bin", "criteria": "red", "capacity": 10},
+    {"id": "yellow_bin", "criteria": "yellow", "capacity": 10}
+]
+
+res = client.sorting.sort(items, bins, "color")
+print(res.data["placements"])
+```
 
 ---
 
