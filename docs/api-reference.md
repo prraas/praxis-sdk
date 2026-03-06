@@ -343,7 +343,109 @@ A `Response` object with `data`:
 
 ---
 
-## 👁️ Vision API
+### Method: `collision`
+
+```python
+collision(
+    box_a: dict,
+    box_b: dict
+) -> Response
+```
+
+Checks whether two 3D axis-aligned bounding boxes (AABB) overlap.
+
+#### Box Format
+
+Each box must have the following keys:
+
+| Key | Description |
+|-----|-------------|
+| `x`, `y`, `z` | Center position in meters |
+| `w`, `h`, `d` | Width, height, depth in meters |
+
+#### Parameters
+
+| Name    | Type   | Description         |
+| ------- | ------ | ------------------- |
+| `box_a` | `dict` | First bounding box  |
+| `box_b` | `dict` | Second bounding box |
+
+#### Returns
+
+A `Response` object with `data`:
+
+```json
+{
+  "colliding": true,
+  "penetration": { "x": 1.0, "y": 1.0, "z": 1.0 },
+  "min_translation_vector": { "axis": "x", "depth": 1.0 },
+  "warnings": ["Objects are overlapping — collision detected"]
+}
+```
+
+#### Example
+
+```python
+box_a = {"x": 0, "y": 0, "z": 0, "w": 2, "h": 2, "d": 2}
+box_b = {"x": 1, "y": 1, "z": 1, "w": 2, "h": 2, "d": 2}
+
+res = client.physics.collision(box_a=box_a, box_b=box_b)
+print(res.data["colliding"])     # True
+print(res.data["penetration"])   # {"x": 1.0, "y": 1.0, "z": 1.0}
+```
+
+---
+
+### Method: `resistance`
+
+```python
+resistance(
+    velocity: float,
+    drag_coefficient: float,
+    cross_sectional_area: float,
+    fluid_density: float = 1.225
+) -> Response
+```
+
+Calculates aerodynamic drag force using: **F = 0.5 × ρ × v² × Cd × A**
+
+#### Parameters
+
+| Name                   | Type    | Description                                         |
+| ---------------------- | ------- | --------------------------------------------------- |
+| `velocity`             | `float` | Object speed in m/s                                 |
+| `drag_coefficient`     | `float` | Cd value (e.g. 0.47 for sphere, 1.0 for flat plate) |
+| `cross_sectional_area` | `float` | Frontal area in m²                                  |
+| `fluid_density`        | `float` | Fluid density in kg/m³ (default: 1.225 = air)       |
+
+#### Returns
+
+A `Response` object with `data`:
+
+```json
+{
+  "drag_force": 28.7875,
+  "velocity": 10.0,
+  "drag_coefficient": 0.47,
+  "cross_sectional_area": 1.0,
+  "fluid_density": 1.225,
+  "warnings": null
+}
+```
+
+#### Example
+
+```python
+res = client.physics.resistance(
+    velocity=15.0,
+    drag_coefficient=0.47,
+    cross_sectional_area=0.05,
+)
+print(res.data["drag_force"])  # N
+```
+
+---
+
 
 ### Class: `VisionAPI`
 
