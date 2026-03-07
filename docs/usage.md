@@ -107,25 +107,37 @@ The Physics API evaluates physical relationships and constraints.
 ### Example: Force Calculation
 
 ```python
-res = client.physics.force(
-    mass=2,
-    acceleration=3
+res = client.physics.force(mass=2, acceleration=3)
+print(res.data)   # {'force': 6.0}
+print(res.cost)   # 0.001
+```
+
+### Example: Collision Detection (Phase 3)
+
+Check if two 3D objects occupy the same space:
+
+```python
+box_a = {"x": 0, "y": 0, "z": 0, "w": 2, "h": 2, "d": 2}
+box_b = {"x": 1, "y": 1, "z": 1, "w": 2, "h": 2, "d": 2}
+
+res = client.physics.collision(box_a=box_a, box_b=box_b)
+
+if res.data["colliding"]:
+    mtv = res.data["min_translation_vector"]
+    print(f"Collision on axis {mtv['axis']}, depth {mtv['depth']}m")
+```
+
+### Example: Drag Resistance (Phase 3)
+
+Calculate aerodynamic force acting on a moving object:
+
+```python
+res = client.physics.resistance(
+    velocity=15.0,           # m/s
+    drag_coefficient=0.47,   # sphere
+    cross_sectional_area=0.05,
 )
-```
-
-### Reading the Result
-
-```python
-print(res.success)
-print(res.data)
-print(res.cost)
-print(res.request_id)
-```
-
-Example output:
-
-```python
-{'force': 6.0}
+print(f"Drag force: {res.data['drag_force']} N")
 ```
 
 Physics execution is:
