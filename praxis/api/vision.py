@@ -40,3 +40,31 @@ class VisionAPI:
             "/api/v1/vision/analyze",
             json=payload,
         )
+
+    def segment(
+        self,
+        image: str,
+        model_tier: str = "nano",
+        min_confidence: float = 0.5,
+    ) -> Response[dict]:
+        """
+        Perform image segmentation to identify precise object shapes and spatial roles.
+
+        Args:
+            image: Base64-encoded image data
+            model_tier: YOLO model tier ("nano" or "small")
+            min_confidence: Minimum confidence threshold (0.0-1.0)
+
+        Returns:
+            Response with polygons, roles (e.g. navigable_surface), and spatial info.
+        """
+        payload = {
+            "image": image,
+            "model_tier": model_tier,
+            "min_confidence": min_confidence,
+        }
+
+        return self._http.post(
+            "/api/v1/vision/segment",
+            json=payload,
+        )
