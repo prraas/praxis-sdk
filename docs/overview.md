@@ -178,6 +178,7 @@ Praxis prioritizes **interoperability over capture** avoiding proprietary lock-i
 Praxis currently focuses on core robotics computation domains:
 
 * 🧭 **Navigation and path planning**
+* 👁️ **Vision and spatial reasoning**
 * ⚙️ **Physics evaluation**
 * 🧪 **Simulation and validation**
 * 🔗 **Multi-step and agent-style workflows**
