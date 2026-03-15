@@ -192,6 +192,48 @@ Navigation results are:
 
 ---
 
+## 👁️ Vision & Spatial Mapping API
+
+The Vision API provides high-precision instance segmentation and spatial reasoning.
+
+### Example: Instance Segmentation
+
+Identify precise object shapes and their functional roles in the scene:
+
+```python
+# Image data as base64
+img_b64 = "..."
+
+res = client.vision.segment(
+    image=img_b64,
+    model_tier="nano",
+    min_confidence=0.5
+)
+
+for obj in res.data["objects"]:
+    print(f"Object: {obj['label']} | Role: {obj['role']}")
+    print(f"Points: {len(obj['points'])} vertices")
+```
+
+### Advanced: Spatial Utilities
+
+The SDK includes `spatial_utils` for processing vision results:
+
+```python
+from praxis.core.spatial_utils import calculate_polygon_area, is_point_in_polygon
+
+# Find the floor/navigable surface
+floor = next(o for o in res.data["objects"] if o["role"] == "navigable_surface")
+
+# Calculate area to ensure robot fits
+area = calculate_polygon_area(floor["points"])
+
+# Check if a specific target coordinate is safe
+is_safe = is_point_in_polygon(0.5, 0.9, floor["points"])
+```
+
+---
+
 ## 🧪 Simulation API
 
 The Simulation API validates robotic logic through controlled execution.
