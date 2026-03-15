@@ -153,6 +153,7 @@ PRAXIS currently supports:
 - ⚙️ **Physics reasoning**  
 - 🧭 **Navigation & path logic**  
 - 🧪 **Simulation & validation**  
+- 👁️ **Vision & Spatial Mapping**
 - ✋ **Manipulation (Pick)**  
 - 🗂️ **Sorting (Capacity & Rules)**  
 - 📊 **Analytics (Usage & Cost)**
@@ -289,6 +290,10 @@ print(res.data)        # {'placements': [...]}
 # Analytics (Telemetry)
 stats = client.analytics.get_stats(days=7)
 print(stats.data)      # {'total_cost': 0.05, 'total_requests': 100}
+
+# Vision & Spatial Mapping (Phase 3 Week 2)
+res = client.vision.segment(image="...")
+print(res.data["objects"]) # [{'label': 'floor', 'role': 'navigable_surface', ...}]
 ```
 
 ---
@@ -380,6 +385,8 @@ See `/examples` for runnable demos:
 * `skills_demo.py`
 * `physics_demo.py`
 * `navigation_demo.py`
+* `vision_demo.py`
+* `spatial_reasoning_demo.py`
 * `agent_loop.py`
 * `session_demo.py`
 * `agent_loop.py`
