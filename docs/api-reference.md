@@ -502,6 +502,51 @@ A `Response` object with `data` containing detected objects and metadata:
 
 ---
 
+### Method: `segment`
+
+```python
+segment(
+    image: str,
+    model_tier: str = "nano",
+    min_confidence: float = 0.5
+) -> Response
+```
+
+Perform instance segmentation to identify precise object shapes and spatial roles.
+
+#### Parameters
+
+| Name             | Type    | Description                                      |
+| ---------------- | ------- | ------------------------------------------------ |
+| `image`          | `str`   | Base64 encoded image string                      |
+| `model_tier`     | `str`   | YOLO model tier ("nano" or "small")              |
+| `min_confidence` | `float` | Minimum confidence threshold (0.0 - 1.0)         |
+
+#### Returns
+
+A `Response` object with `data` containing polygons and spatial metadata:
+
+```json
+{
+  "model": "yolov8n-seg",
+  "count": 2,
+  "objects": [
+    {
+      "id": 0,
+      "label": "floor",
+      "role": "navigable_surface",
+      "points": [[0.1, 0.8], [0.9, 0.8], ...]
+    }
+  ],
+  "spatial_info": {
+    "has_navigable_surface": true,
+    "obstacle_count": 1
+  }
+}
+```
+
+---
+
 ## 🧭 Navigation API
 
 ### Class: `NavigationAPI`
