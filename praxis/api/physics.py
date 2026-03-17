@@ -95,3 +95,37 @@ class PhysicsAPI:
             "/api/v1/physics/resistance",
             json=payload,
         )
+
+    def leverage(
+        self,
+        arm_length: float,
+        angle_degrees: float,
+        load_mass: float,
+        pivot_torque_limit: float,
+    ) -> Response[dict]:
+        """
+        Calculate mechanical leverage and torque at a specific joint.
+
+        Args:
+            arm_length: Length of the arm in meters.
+            angle_degrees: Angle of the arm in degrees (0 = horizontal).
+            load_mass: Mass of the load in kg.
+            pivot_torque_limit: Maximum torque limit of the joint in Nm.
+
+        Returns:
+            Response with torque_exerted, exceeds_limit, and mechanical_advantage.
+
+        Status: Stable (v1-alpha)
+        Guarantee: Deterministic
+        """
+        payload = {
+            "arm_length": arm_length,
+            "angle_degrees": angle_degrees,
+            "load_mass": load_mass,
+            "pivot_torque_limit": pivot_torque_limit,
+        }
+
+        return self._http.post(
+            "/api/v1/physics/leverage",
+            json=payload,
+        )
