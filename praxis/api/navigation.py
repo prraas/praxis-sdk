@@ -40,3 +40,31 @@ class NavigationAPI:
             "/api/v1/simulate/navigation",
             json=payload,
         )
+
+    def smooth_path(
+        self,
+        path: list[tuple[float, float]] | list[list[float]],
+        density: int = 5,
+    ) -> Response[list[tuple[float, float]]]:
+        """
+        Smooth a discrete path using Catmull-Rom spline interpolation.
+
+        Args:
+            path: List of (x, y) waypoints.
+            density: Number of points to interpolate between each pair of waypoints.
+
+        Returns:
+            Response containing the list of smoothed waypoints.
+
+        Status: Stable (v1-alpha)
+        Guarantee: Deterministic
+        """
+        payload = {
+            "path": [list(p) for p in path],
+            "density": density,
+        }
+
+        return self._http.post(
+            "/api/v1/simulate/navigation/smooth",
+            json=payload,
+        )
