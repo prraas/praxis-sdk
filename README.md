@@ -154,7 +154,9 @@ PRAXIS currently supports:
 - 🧭 **Navigation & path logic**  
 - 🧪 **Simulation & validation**  
 - 👁️ **Vision & Spatial Mapping**
-- ✋ **Manipulation (Pick)**  
+- ✋ **Manipulation (Grasp & Pick)**  
+- 🧭 **Trajectory Smoothing (Splines)**
+- ⚙️ **Advanced Physics (Leverage)**
 - 🗂️ **Sorting (Capacity & Rules)**  
 - 📊 **Analytics (Usage & Cost)**
 - 🔁 **Multi-step agent workflows**  
@@ -291,7 +293,20 @@ print(res.data)        # {'placements': [...]}
 stats = client.analytics.get_stats(days=7)
 print(stats.data)      # {'total_cost': 0.05, 'total_requests': 100}
 
-# Vision & Spatial Mapping (Phase 3 Week 2)
+# Physics: Leverage & Torque
+res = client.physics.leverage(arm_length=1.5, angle_degrees=45, load_mass=10.0, pivot_torque_limit=150)
+print(res.data)        # {'torque_exerted': 104.05, 'exceeds_limit': False}
+
+# Manipulation: Grasp Feasibility
+res = client.manipulation.grasp_feasibility(object_width=0.08, gripper_max_aperture=0.12)
+print(res.data)        # {'score': 1.0, 'feasible': True}
+
+# Navigation: Spline Smoothing
+path = [(0,0), (1,1), (2,0)]
+res = client.navigation.smooth_path(path=path, density=5)
+print(res.data)        # List of smoothed (x, y) waypoints
+
+# Vision & Spatial Mapping
 res = client.vision.segment(image="...")
 print(res.data["objects"]) # [{'label': 'floor', 'role': 'navigable_surface', ...}]
 ```
@@ -387,8 +402,8 @@ See `/examples` for runnable demos:
 * `navigation_demo.py`
 * `vision_demo.py`
 * `spatial_reasoning_demo.py`
-* `agent_loop.py`
-* `session_demo.py`
+* `robotics_intel_demo.py`
+* `master_integration_test.py`
 * `agent_loop.py`
 * `session_demo.py`
 
