@@ -149,6 +149,56 @@ A `Response` object with `data`:
 
 ---
 
+### Method: `grasp_feasibility`
+
+```python
+grasp_feasibility(
+    object_width: float,
+    gripper_max_aperture: float,
+    gripper_min_aperture: float = 0.0
+) -> Response
+```
+
+Assess feasibility of a grasp based on object and gripper geometry.
+
+#### Parameters
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `object_width` | `float` | Width of the object in meters |
+| `gripper_max_aperture` | `float` | Max gripper opening in meters |
+| `gripper_min_aperture` | `float` | Min gripper opening in meters (default 0.0) |
+
+#### Returns
+
+A `Response` object with `score` (0.0 - 1.0) and `feasible` (bool).
+
+---
+
+### Method: `grasp_closure`
+
+```python
+grasp_closure(
+    contacts: list[dict],
+    friction_mu: float = 0.4
+) -> Response
+```
+
+Validate force-closure for a set of contact points.
+
+#### Parameters
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `contacts` | `list[dict]` | List of contact points with normals `{"x", "y", "nx", "ny"}` |
+| `friction_mu` | `float` | Coefficient of friction (default 0.4) |
+
+#### Returns
+
+A `Response` object with `has_closure` status and `score`.
+
+---
+
 ## 🗂️ Sorting API
 
 ### Class: `SortingAPI`
@@ -443,6 +493,62 @@ res = client.physics.resistance(
 )
 print(res.data["drag_force"])  # N
 ```
+
+---
+
+### Method: `leverage`
+
+```python
+leverage(
+    arm_length: float,
+    angle_degrees: float,
+    load_mass: float,
+    pivot_torque_limit: float
+) -> Response
+```
+
+Calculates mechanical leverage and torque at a specific joint.
+
+#### Parameters
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `arm_length` | `float` | Length of the arm in meters |
+| `angle_degrees` | `float` | Angle of the arm in degrees (0 = horizontal) |
+| `load_mass` | `float` | Mass of the load in kg |
+| `pivot_torque_limit` | `float` | Max torque limit of the joint in Nm |
+
+#### Returns
+
+A `Response` object with `torque_exerted`, `exceeds_limit`, and `mechanical_advantage`.
+
+---
+
+### Method: `leverage`
+
+```python
+leverage(
+    arm_length: float,
+    angle_degrees: float,
+    load_mass: float,
+    pivot_torque_limit: float
+) -> Response
+```
+
+Calculates mechanical leverage and torque at a specific joint.
+
+#### Parameters
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `arm_length` | `float` | Length of the arm in meters |
+| `angle_degrees` | `float` | Angle of the arm in degrees (0 = horizontal) |
+| `load_mass` | `float` | Mass of the load in kg |
+| `pivot_torque_limit` | `float` | Max torque limit of the joint in Nm |
+
+#### Returns
+
+A `Response` object with `torque_exerted`, `exceeds_limit`, and `mechanical_advantage`.
 
 ---
 
