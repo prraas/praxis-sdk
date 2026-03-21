@@ -140,6 +140,23 @@ res = client.physics.resistance(
 print(f"Drag force: {res.data['drag_force']} N")
 ```
 
+### Example: Arm Leverage (Week 3)
+
+Evaluate joint safety for a robotic arm lift:
+
+```python
+res = client.physics.leverage(
+    arm_length=1.5,
+    angle_degrees=45,
+    load_mass=10.0,
+    pivot_torque_limit=150
+)
+
+print(f"Torque: {res.data['torque_exerted']} Nm")
+if res.data["exceeds_limit"]:
+    print("WARNING: Pivot torque limit exceeded!")
+```
+
 Physics execution is:
 
 * deterministic
@@ -189,6 +206,23 @@ Navigation results are:
 * deterministic
 * environment-consistent
 * reproducible across machines
+
+### Example: Trajectory Smoothing (Week 3)
+
+Smooth out jerky, grid-based paths into natural movement trajectories:
+
+```python
+# discrete input path
+path = [(0,0), (1,1), (2,0)]
+
+res = client.navigation.smooth_path(
+    path=path,
+    density=5  # generate 5 points between each waypoint
+)
+
+# smoothed_path is a list of [x, y] coordinates
+smoothed_path = res.data
+```
 
 ---
 
@@ -292,6 +326,20 @@ if res.success:
     print("Safe to pick!")
 else:
     print("Slippage detected:", res.data["warnings"])
+```
+
+### Example: Grasp Feasibility (Week 3)
+
+Check if a gripper can securely hold an object of a given size:
+
+```python
+res = client.manipulation.grasp_feasibility(
+    object_width=0.08,
+    gripper_max_aperture=0.12
+)
+
+if res.data["feasible"]:
+    print(f"Perfect match! Feasibility score: {res.data['score']}")
 ```
 
 ### Example: Sorting Logic
