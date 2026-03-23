@@ -93,7 +93,7 @@ class HttpClient:
 
     def _raise_api_error(self, payload: dict) -> None:
         error = payload.get("error") or "unknown_error"
-        message = payload.get("message") or "Request failed"
+        message = payload.get("message") or payload.get("detail") or "Request failed"
 
         if error == "validation_error":
             raise ValidationError(message)
