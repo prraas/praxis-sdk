@@ -28,6 +28,16 @@ class PhysicsAPI:
             json=payload,
         )
 
+    def mass(self, volume: float, density: float) -> Response[dict]:
+        """Compute mass using m = p * V."""
+        payload = {"volume": volume, "density": density}
+        return self._http.post("/api/v1/physics/mass", json=payload)
+
+    def stability(self, base_width: float, center_of_mass_height: float) -> Response[dict]:
+        """Compute simple stability score."""
+        payload = {"base_width": base_width, "center_of_mass_height": center_of_mass_height}
+        return self._http.post("/api/v1/physics/stability", json=payload)
+
     def collision(
         self,
         box_a: dict,
@@ -129,3 +139,28 @@ class PhysicsAPI:
             "/api/v1/physics/leverage",
             json=payload,
         )
+
+    def collision_sphere(self, sphere_a: dict, sphere_b: dict) -> Response[dict]:
+        """Check collision between two spheres."""
+        payload = {"sphere_a": sphere_a, "sphere_b": sphere_b}
+        return self._http.post("/api/v1/physics/collision/sphere", json=payload)
+
+    def collision_obb(self, box_a: dict, box_b: dict) -> Response[dict]:
+        """Check collision between two oriented bounding boxes (OBB)."""
+        payload = {"box_a": box_a, "box_b": box_b}
+        return self._http.post("/api/v1/physics/collision/obb", json=payload)
+
+    def grip_requirement(self, load_mass: float, acceleration: float = 0.0, mu: float = 0.4, safety: float = 1.5) -> Response[dict]:
+        """Calculate minimum grip force required to prevent slip."""
+        payload = {
+            "load_mass": load_mass,
+            "acceleration_m_s2": acceleration,
+            "friction_mu": mu,
+            "safety_factor": safety
+        }
+        return self._http.post("/api/v1/physics/grip-requirement", json=payload)
+
+    def stability_composite(self, shapes: list[dict]) -> Response[dict]:
+        """Evaluate stability of a composite object assembly."""
+        payload = {"shapes": shapes}
+        return self._http.post("/api/v1/physics/stability/composite", json=payload)
