@@ -68,3 +68,13 @@ class VisionAPI:
             "/api/v1/vision/segment",
             json=payload,
         )
+
+    def voxel_grid(self, segments: list[dict], resolution: int = 20) -> Response[dict]:
+        """Generate a 3D occupancy voxel grid from 2D segmentation results."""
+        payload = {"segments": segments, "resolution": resolution}
+        return self._http.post("/api/v1/vision/voxel-grid", json=payload)
+
+    def navigable_lanes(self, segments: list[dict], agent_width: float = 0.05) -> Response[dict]:
+        """Extract logical navigation lanes from surface segments."""
+        payload = {"segments": segments, "agent_width": agent_width}
+        return self._http.post("/api/v1/vision/navigable-lanes", json=payload)
