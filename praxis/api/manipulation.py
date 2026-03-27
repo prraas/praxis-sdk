@@ -9,6 +9,11 @@ class ManipulationAPI:
     def __init__(self, http: HttpClient):
         self._http = http
 
+    def detect(self, image: str, model: str = "auto") -> Response[dict]:
+        """Analyze objects in a base64 encoded image using vision core."""
+        payload = {"image": image, "model": model}
+        return self._http.post("/api/v1/vision/analyze", json=payload)
+
     def pick(
             self,
             object_position: list[float],
@@ -94,3 +99,19 @@ class ManipulationAPI:
             "/api/v1/robotics/grasp/closure",
             json=payload,
         )
+
+    def grasp_robustness(
+        self,
+        contacts: list[dict[str, float]],
+        friction_mu: float = 0.4,
+        external_force: float = 0.0,
+    ) -> Response[dict]:
+        """
+        Evaluate the robustness of a grasp against external perturbations.
+        """
+        payload = {
+            "contacts": contacts,
+            "friction_mu": friction_mu,
+            "external_force_n": external_force,
+        }
+        return self._http.post("/api/v1/robotics/grasp/robustness", json=payload)
