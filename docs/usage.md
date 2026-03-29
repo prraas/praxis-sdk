@@ -112,7 +112,7 @@ print(res.data)   # {'force': 6.0}
 print(res.cost)   # 0.001
 ```
 
-### Example: Collision Detection (Phase 3)
+### Example: Collision Detection
 
 Check if two 3D objects occupy the same space:
 
@@ -127,7 +127,7 @@ if res.data["colliding"]:
     print(f"Collision on axis {mtv['axis']}, depth {mtv['depth']}m")
 ```
 
-### Example: Drag Resistance (Phase 3)
+### Example: Drag Resistance
 
 Calculate aerodynamic force acting on a moving object:
 
@@ -140,7 +140,7 @@ res = client.physics.resistance(
 print(f"Drag force: {res.data['drag_force']} N")
 ```
 
-### Example: Arm Leverage (Week 3)
+### Example: Arm Leverage
 
 Evaluate joint safety for a robotic arm lift:
 
@@ -207,7 +207,7 @@ Navigation results are:
 * environment-consistent
 * reproducible across machines
 
-### Example: Trajectory Smoothing (Week 3)
+### Example: Trajectory Smoothing
 
 Smooth out jerky, grid-based paths into natural movement trajectories:
 
@@ -328,7 +328,7 @@ else:
     print("Slippage detected:", res.data["warnings"])
 ```
 
-### Example: Grasp Feasibility (Week 3)
+### Example: Grasp Feasibility
 
 Check if a gripper can securely hold an object of a given size:
 
@@ -340,6 +340,18 @@ res = client.manipulation.grasp_feasibility(
 
 if res.data["feasible"]:
     print(f"Perfect match! Feasibility score: {res.data['score']}")
+```
+
+### Example: Grasp Robustness
+
+Score how resistant a grasp is to external disturbances:
+
+```python
+res = client.manipulation.grasp_robustness(
+    contact_forces=[[0.0, 0.0, 5.0], [0.0, 0.0, -5.0]],
+    object_mass=0.5
+)
+print(f"Robustness score: {res.data['robustness_score']}")
 ```
 
 ### Example: Sorting Logic
@@ -356,6 +368,53 @@ bins = [
 
 res = client.sorting.sort(items, bins, "color")
 print(res.data["placements"])
+```
+
+---
+
+## 🤖 Multi-Agent Coordination API
+
+The Multi-Agent API enables coordination logic for fleets of robots operating in shared environments.
+
+### Example: Trajectory Conflict Detection
+
+Detect whether two agents will collide along their paths:
+
+```python
+res = client.multi_agent.check_conflicts(
+    trajectories=[
+        [[0, 0, 0], [1, 0, 0], [2, 0, 0]],
+        [[0, 0, 0], [1, 0, 0], [2, 0, 0]]
+    ],
+    threshold=0.5
+)
+print(f"Conflicts detected: {res.data['conflict_count']}")
+```
+
+### Example: Swarm Steering
+
+Compute a steering vector to guide an agent toward a target while avoiding others:
+
+```python
+res = client.multi_agent.swarm_steer(
+    agent_position=[1.0, 1.0, 0.0],
+    target_position=[5.0, 5.0, 0.0],
+    neighbor_positions=[[1.5, 1.0, 0.0], [1.0, 1.5, 0.0]]
+)
+print(f"Steering vector: {res.data['steering_vector']}")
+```
+
+### Example: Formation Planning
+
+Arrange a fleet of agents into a geometric formation:
+
+```python
+res = client.multi_agent.formation(
+    agent_count=4,
+    formation_type="line",
+    spacing=1.5
+)
+print(f"Positions: {res.data['positions']}")
 ```
 
 ---
