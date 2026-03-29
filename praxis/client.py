@@ -10,6 +10,7 @@ from praxis.api.manipulation import ManipulationAPI
 from praxis.api.sorting import SortingAPI
 from praxis.api.analytics import AnalyticsAPI
 from praxis.api.assembly import AssemblyAPI
+from praxis.api.multi_agent import MultiAgentAPI
 
 
 class Client:
@@ -44,6 +45,7 @@ class Client:
         self.sorting = SortingAPI(self._http)
         self.analytics = AnalyticsAPI(self._http)
         self.assembly = AssemblyAPI(self._http)
+        self.multi_agent = MultiAgentAPI(self._http)
 
     def session(self) -> Session:
         """
