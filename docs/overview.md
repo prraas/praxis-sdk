@@ -181,6 +181,9 @@ Praxis currently focuses on core robotics computation domains:
 * 👁️ **Vision and spatial reasoning**
 * ⚙️ **Physics evaluation**
 * 🧪 **Simulation and validation**
+* ✋ **Manipulation planning (pick, grasp, robustness)**
+* 🤖 **Multi-agent coordination and swarm steering**
+* 📊 **3D spatial primitives (voxelization, OBB collision)**
 * 🔗 **Multi-step and agent-style workflows**
 
 Each domain is exposed through:
@@ -207,6 +210,18 @@ Praxis SDK
 Remote Execution Engine
         ↓
 Deterministic Result + Cost + Trace
+```
+
+For agent fleets and multi-robot systems:
+
+```
+Agent Fleet / Orchestrator
+        ↓
+Praxis Multi-Agent API
+        ↓
+Conflict Detection + Formation + Swarm Steering
+        ↓
+Coordinated Per-Agent Instructions
 ```
 
 You retain:
