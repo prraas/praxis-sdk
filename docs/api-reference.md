@@ -87,6 +87,8 @@ PRAXIS_API_KEY
 | `client.simulation` | `SimulationAPI` | Simulation execution API  |
 | `client.manipulation`| `ManipulationAPI` | Object interaction & pick API |
 | `client.sorting`    | `SortingAPI`    | Bin packing & rules API   |
+| `client.vision`     | `VisionAPI`     | Vision & spatial analysis API |
+| `client.multi_agent`| `MultiAgentAPI` | Swarm & fleet coordination API |
 | `client.analytics`  | `AnalyticsAPI`  | Telemetry & cost API      |
 
 Each property returns a **domain-specific API object**.
@@ -650,6 +652,96 @@ A `Response` object with `data` containing polygons and spatial metadata:
   }
 }
 ```
+
+---
+
+## 🤖 Multi-Agent API
+
+### Class: `MultiAgentAPI`
+
+Accessed via:
+
+```python
+client.multi_agent
+```
+
+Coordinates logic for **multi-robot fleets** — including conflict detection, formation planning, and swarm steering.
+
+---
+
+### Method: `check_conflicts`
+
+```python
+check_conflicts(
+    trajectories: list[list[list[float]]],
+    threshold: float = 0.5
+) -> Response
+```
+
+Detects spatiotemporal conflicts between agent trajectories.
+
+#### Parameters
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `trajectories` | `list[list[list[float]]]` | List of agent paths, each a list of `[x, y, z]` points |
+| `threshold` | `float` | Minimum safe distance between agents (meters) |
+
+#### Returns
+
+A `Response` with `conflict_count` and a list of `conflicts` with agent indices and positions.
+
+---
+
+### Method: `formation`
+
+```python
+formation(
+    agent_count: int,
+    formation_type: str,
+    spacing: float = 1.0
+) -> Response
+```
+
+Computes target positions for a fleet of agents in a geometric formation.
+
+#### Parameters
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `agent_count` | `int` | Number of agents in the fleet |
+| `formation_type` | `str` | `"v_shape"`, `"line"`, or `"grid"` |
+| `spacing` | `float` | Distance between agents in meters |
+
+#### Returns
+
+A `Response` with `positions`, a list of `[x, y, z]` target positions per agent.
+
+---
+
+### Method: `swarm_steer`
+
+```python
+swarm_steer(
+    agent_position: list[float],
+    target_position: list[float],
+    neighbor_positions: list[list[float]]
+) -> Response
+```
+
+Computes a combined steering vector using separation, cohesion, and alignment rules.
+
+#### Parameters
+
+| Name | Type | Description |
+| --- | --- | --- |
+| `agent_position` | `[x, y, z]` | Current agent position |
+| `target_position` | `[x, y, z]` | Goal position |
+| `neighbor_positions` | `list[[x, y, z]]` | Positions of nearby agents |
+
+#### Returns
+
+A `Response` with `steering_vector` `[vx, vy, vz]` and component breakdown.
 
 ---
 
