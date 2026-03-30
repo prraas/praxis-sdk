@@ -150,14 +150,15 @@ Nothing is implicit.
 
 PRAXIS currently supports:
 
-- ⚙️ **Physics reasoning**  
-- 🧭 **Navigation & path logic**  
-- 🧪 **Simulation & validation**  
-- 👁️ **Vision & Spatial Mapping**
-- ✋ **Manipulation (Grasp & Pick)**  
+- ⚙️ **Physics reasoning** — force, mass, collision, drag, stability
+- 🧭 **Navigation & path logic** — grid planning, spline smoothing
+- 🧪 **Simulation & validation** — controlled environment execution
+- 👁️ **Vision & Spatial Mapping** — segmentation, voxelization, lanes
+- ✋ **Manipulation (Grasp & Pick)** — feasibility, robustness, closure
+- 🤖 **Multi-Agent Coordination** — swarm steering, formation planning, conflict detection
+- 📊 **3D Spatial Primitives** — OBB/Sphere collision, navigable lane extraction
 - 🧭 **Trajectory Smoothing (Splines)**
-- ⚙️ **Advanced Physics (Leverage)**
-- 🗂️ **Sorting (Capacity & Rules)**  
+- 🗂️ **Sorting (Capacity & Rules)**
 - 📊 **Analytics (Usage & Cost)**
 - 🔁 **Multi-step agent workflows**  
 
